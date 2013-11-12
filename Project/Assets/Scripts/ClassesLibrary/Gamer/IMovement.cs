@@ -2,7 +2,6 @@ using System;
 
 namespace ClassesLibrary {
     namespace Gamer {
-
         /// Интерфейс "Перемещение игрока".
         public interface IMovement
         {

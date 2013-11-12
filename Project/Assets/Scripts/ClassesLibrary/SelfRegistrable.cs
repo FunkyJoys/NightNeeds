@@ -19,7 +19,7 @@ namespace ClassesLibrary {
         public SelfRegistrable()
         {
             if( null == m_RegistrableFactory ) {
-                m_RegistrableFactory = new RegistrableFactory( );
+                m_RegistrableFactory = new RegistrableFactory();
             }
         }
 
@@ -52,13 +52,10 @@ namespace ClassesLibrary {
         }
 
         static protected RegistrableFactory m_RegistrableFactory;
-
     }
-
     /// <summary>
     /// Делегат создания объектов.
     /// </summary>
     public delegate SelfRegistrable ConstructorDelegate();
-
 }
 

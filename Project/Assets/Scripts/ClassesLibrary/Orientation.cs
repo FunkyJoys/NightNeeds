@@ -8,11 +8,9 @@ namespace ClassesLibrary {
             East,
             South,
             West,
-
             First = North,
             Last = West
         }
-        ;
 
         public Orientation()
         {
@@ -30,12 +28,12 @@ namespace ClassesLibrary {
         /// Устанавливает ориентацию либо по букве (N, E, S или W), либо по числу, представляющему азимут
         public void SetOrientation(String s)
         {
-            char[] nesw = new char[] { 'N','E','S','W' };
+            char[] nesw = new char[] { 'N', 'E', 'S', 'W' };
             if( 0 == s.IndexOfAny( nesw ) ) {
                 for( FixedOrientation fo = FixedOrientation.First; fo <= FixedOrientation.Last; ++fo ) {
                     int index = (int)fo;
-                    if( nesw[ index ] == s[0] ) {
-                        SetFixedOrientation (fo);
+                    if( nesw[ index ] == s[ 0 ] ) {
+                        SetFixedOrientation( fo );
                     }
                 }
                 return;
@@ -43,20 +41,16 @@ namespace ClassesLibrary {
 
             m_fAzimuth = 0.0;
             try {
-                m_fAzimuth = Convert.ToDouble (s);
+                m_fAzimuth = Convert.ToDouble( s );
 
-            } catch (FormatException) {
+            } catch( FormatException ) {
                 // В случае ошибки преобразования получим нуль
             }
         }
 
         public double Azimuth {
-            get {
-                return m_fAzimuth;
-            }
-            set {
-                m_fAzimuth = value;
-            }
+            get { return m_fAzimuth; }
+            set { m_fAzimuth = value; }
         }
 
         /// Увеличивает значение азимута на указанный угол в градусах с приведением к интервалу [0..360)

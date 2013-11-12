@@ -23,8 +23,7 @@ namespace ClassesLibrary {
         /// Основное действие эффекта.
         public abstract void Play();
 
-        static private GameLogic    m_GameLogic;
-
+        static private GameLogic m_GameLogic;
     }
 }
 

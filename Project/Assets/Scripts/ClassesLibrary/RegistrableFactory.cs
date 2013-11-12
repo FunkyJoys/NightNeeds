@@ -9,7 +9,7 @@ namespace ClassesLibrary {
     {
         public RegistrableFactory()
         {
-            m_AllDelegates = new Dictionary<String,ConstructorDelegate>( );
+            m_AllDelegates = new Dictionary<String,ConstructorDelegate>();
         }
 
         /// <summary>
@@ -43,10 +43,10 @@ namespace ClassesLibrary {
             }
 
             ConstructorDelegate constructorDelegate = m_AllDelegates[ name ];
-            return constructorDelegate( );
+            return constructorDelegate();
         }
 
-        private Dictionary<String,ConstructorDelegate>  m_AllDelegates;
+        private Dictionary<String,ConstructorDelegate> m_AllDelegates;
     }
 }
 

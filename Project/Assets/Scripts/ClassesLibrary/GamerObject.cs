@@ -6,7 +6,7 @@ namespace ClassesLibrary {
     {
         public GamerObject()
         {
-            m_Orientation = new Orientation( );
+            m_Orientation = new Orientation();
         }
 
         /// Повернуть игрока влево на 90 градусов.
@@ -44,20 +44,21 @@ namespace ClassesLibrary {
         }
 
         /// Текущая позиция игрока на игровом поле
-        public Point<int> CurrentPosition { get { return m_Position; } }
+        public Point<int> CurrentPosition {
+            get { return m_Position; }
+        }
 
         /// Отнимает у игрока на этом уровне в текущей игре количество времени
-        public void TakeTime (double penalty)
+        public void TakeTime(double penalty)
         {
             TimeLeft -= penalty;
-            if (TimeLeft <= 0) {
+            if( TimeLeft <= 0 ) {
                 m_GameLogic.TimeIsUp();
             }
         }
 
-
         /// Увеличивает количество шагов, проделанное на этом уровне в текущей игре
-        public void MakeSteps (int stepsDone)
+        public void MakeSteps(int stepsDone)
         {
             ++StepsInGame;
         }
@@ -66,19 +67,17 @@ namespace ClassesLibrary {
         public double TimeLeft { get; set; }
 
         /// Количество шагов, проделанное в этом уровне в текущей игре
-        public int StepsInGame { get; set; }    
+        public int StepsInGame { get; set; }
 
         /// Устанавливает статические ссылки на игровую логику
-        static public void SetStatics (ref GameLogic gameLogic)
+        static public void SetStatics(ref GameLogic gameLogic)
         {
             m_GameLogic = gameLogic;
         }
-        
 
-        private Point<int>          m_Position;
-        private Orientation         m_Orientation;
-        static private GameLogic    m_GameLogic;
-        
+        private Point<int> m_Position;
+        private Orientation m_Orientation;
+        static private GameLogic m_GameLogic;
     }
 }
 

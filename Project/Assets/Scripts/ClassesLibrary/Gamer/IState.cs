@@ -2,7 +2,6 @@ using System;
 
 namespace ClassesLibrary {
     namespace Gamer {
-
         /// Интерфейс "Состояние игрока".
         public interface IState
         {

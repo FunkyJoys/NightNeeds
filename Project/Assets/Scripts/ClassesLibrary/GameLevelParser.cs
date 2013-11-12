@@ -18,12 +18,12 @@ namespace ClassesLibrary {
         /// </summary>
         public GameLevelParser()
         {
-            Clear( );
+            Clear();
             m_lastError = null;
             m_fileName = null;
 
-            m_Dictionary = new StringDictionary( );
-            m_LevelArray = new DoubleArray<String>( );
+            m_Dictionary = new StringDictionary();
+            m_LevelArray = new DoubleArray<String>();
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace ClassesLibrary {
         {
             m_lastError = null;
             m_fileName = fileName;
-            Clear( );
+            Clear();
 
             // Синтетический цикл, выход из которого означает ошибку парсинга файла
             do {
@@ -93,20 +93,20 @@ namespace ClassesLibrary {
                     bParseSucceeded = false;
 
                     String sLine = allLines[ nCurrLine++ ];
-                    m_lastError = String.Format( "Too short line {0}", nCurrLine-1 );
+                    m_lastError = String.Format( "Too short line {0}", nCurrLine - 1 );
                     if( sLine.Length < 3 ) break;
 
                     //    - первый символ, который должен быть двойной кавычкой;
                     m_lastError = String.Format( "Line {0} doesn't starts with '\"'", nCurrLine );
-                    if( !sLine[0].Equals('"') ) break;
-                    sLine = sLine.Remove(0,1);
+                    if( !sLine[ 0 ].Equals( '"' ) ) break;
+                    sLine = sLine.Remove( 0, 1 );
 
                     //    - проверяем последний символ. Если это **"};** - значит эту строку считаем последней и после нее прекращаем обработку. Удаляем эту последовательность символов;
                     bool bIsLastLine = sLine.EndsWith( "\"};" );
                     if( bIsLastLine ) {
                         int pos = sLine.LastIndexOf( "\"};" );
                         sLine = sLine.Remove( pos );
-                    }else {
+                    } else {
                         //    - иначе последними символами должны являться **",**. Если это так - удаляем их.
                         int pos = sLine.LastIndexOf( "\"," );
                         m_lastError = String.Format( "Line {0} doesn't ends with '\",'", nCurrLine );
@@ -118,21 +118,22 @@ namespace ClassesLibrary {
                     if( !bParametersLineFound ) {
                         bParametersLineFound = true;
                         // Разбираем строку параметров
-                        String[] parameters = sLine.Split(' ');
-                        m_lastError = String.Format( "Line {0} must containt 4 parameters divided with single space", nCurrLine );
+                        String[] parameters = sLine.Split( ' ' );
+                        m_lastError = String.Format( "Line {0} must containt 4 parameters divided with single space",
+                                                     nCurrLine );
                         if( parameters.Length != 4 ) break;
 
                         int nDictionarySize = 0;
                         try {
-                            m_width = Convert.ToInt32( parameters[0] );
-                            m_height = Convert.ToInt32( parameters[1] );
+                            m_width = Convert.ToInt32( parameters[ 0 ] );
+                            m_height = Convert.ToInt32( parameters[ 1 ] );
 
                             m_LevelArray.SetSize( m_width, m_height );
 
-                            nDictionarySize = Convert.ToInt32( parameters[2] );
-                            m_nDictionaryKeySize = Convert.ToInt32( parameters[3] );
+                            nDictionarySize = Convert.ToInt32( parameters[ 2 ] );
+                            m_nDictionaryKeySize = Convert.ToInt32( parameters[ 3 ] );
 
-                        }catch (ApplicationException ex) {
+                        } catch( ApplicationException ex ) {
                             m_lastError = String.Format( "Error try convert number: {0}", ex.Message );
                             break;
                         }
@@ -143,17 +144,17 @@ namespace ClassesLibrary {
                         // 7. По следующим **количество цветов** строк составляем словарь:
                         int nKeyIndex = 0;
                         bool bDictionaryOK = true;
-                        while (bDictionaryOK && nCurrLine < nLineCount && nKeyIndex++ < nDictionarySize) {
-                            sLine = allLines [nCurrLine++];
+                        while( bDictionaryOK && nCurrLine < nLineCount && nKeyIndex++ < nDictionarySize ) {
+                            sLine = allLines[ nCurrLine++ ];
 
                             // Причесываем строку
                             {
                                 // удаляем начальную кавычку
-                                bDictionaryOK = sLine[0].Equals('"');
+                                bDictionaryOK = sLine[ 0 ].Equals( '"' );
                                 m_lastError = String.Format( "Line {0} must starts with double quote", nCurrLine );
                                 if( !bDictionaryOK ) break;
 
-                                sLine = sLine.Remove(0,1); 
+                                sLine = sLine.Remove( 0, 1 ); 
 
                                 // удаляем окончательные '",'
                                 int pos = sLine.LastIndexOf( "\"," );
@@ -168,17 +169,21 @@ namespace ClassesLibrary {
                             String[] s = sLine.Split( '\t' );
 
                             bDictionaryOK = s.Length == 2;
-                            m_lastError = String.Format( "The code and the descriptor in line {0} must be devided by TAB and 'c '", nCurrLine );
+                            m_lastError = String.Format( "The code and the descriptor in line {0} must be devided by TAB and 'c '",
+                                                         nCurrLine );
                             if( !bDictionaryOK ) break;
 
-                            String key = s[0];
+                            String key = s[ 0 ];
                             bDictionaryOK = m_nDictionaryKeySize == key.Length;
-                            m_lastError = String.Format( "The code in line {0} must contains {1} symbols(s)", nCurrLine, m_nDictionaryKeySize );
+                            m_lastError = String.Format( "The code in line {0} must contains {1} symbols(s)",
+                                                         nCurrLine,
+                                                         m_nDictionaryKeySize );
                             if( !bDictionaryOK ) break;
 
-                            String value = s[1];
+                            String value = s[ 1 ];
                             bDictionaryOK = value.StartsWith( "c " );
-                            m_lastError = String.Format( "Symbols 'c ' are not found in line {0} as divider", nCurrLine );
+                            m_lastError = String.Format( "Symbols 'c ' are not found in line {0} as divider",
+                                                         nCurrLine );
                             if( !bDictionaryOK ) break;
 
                             value = value.Remove( 0, 2 );
@@ -200,7 +205,10 @@ namespace ClassesLibrary {
                     //    - цикл по всем столбцам **ширина**;
                     //    - берем символ [строка][столбец] и сохраняем его во внутренний массив;
                     //    - удаляем строку.
-                    m_lastError = String.Format( "Line {0} expected items count: {1}, found: {2}", nCurrLine, m_width, sLine.Length );
+                    m_lastError = String.Format( "Line {0} expected items count: {1}, found: {2}",
+                                                 nCurrLine,
+                                                 m_width,
+                                                 sLine.Length );
                     if( sLine.Length != m_width * m_nDictionaryKeySize ) break;
 
                     bParseSucceeded = true;
@@ -212,7 +220,10 @@ namespace ClassesLibrary {
 
                         bParseSucceeded = m_Dictionary.ContainsKey( symbol );
                         if( !bParseSucceeded ) {
-                            m_lastError = String.Format( "Line {0}: found unknown symbol in position {1}: '{2}'", nCurrLine, col+1, symbol );
+                            m_lastError = String.Format( "Line {0}: found unknown symbol in position {1}: '{2}'",
+                                                         nCurrLine,
+                                                         col + 1,
+                                                         symbol );
                         }
                     
                         m_LevelArray.SetItem( nLevelLinesCount, col, symbol );
@@ -243,21 +254,21 @@ namespace ClassesLibrary {
                     return true;
                 }
 
-            }while (false);
+            } while ( false );
 
             // Раз вышли из синтетического цикла - значит все плохо
             Clear();
 
             return false;
-        }// LoadFromFile()
-
+        }
+        // LoadFromFile()
         /// <summary>
         /// Указывает на успешность загрузки уровня
         /// </summary>
         /// <returns>
         /// <c>true</c> если загрузка была успешной; иначе - <c>false</c>.
         /// </returns>
-        public bool IsLoaded ()
+        public bool IsLoaded()
         {
             return 0 < m_width * m_height;
         }
@@ -269,9 +280,7 @@ namespace ClassesLibrary {
         /// Ширина уровня
         /// </value>
         public int Width {
-            get {
-                return m_width;
-            }
+            get { return m_width; }
         }
 
         /// <summary>
@@ -281,9 +290,7 @@ namespace ClassesLibrary {
         /// Высота уровня
         /// </value>
         public int Height {
-            get {
-                return m_height;
-            }
+            get { return m_height; }
         }
 
         /// <summary>
@@ -295,11 +302,11 @@ namespace ClassesLibrary {
         /// <param name='col'>
         /// Номер столбца уровня
         /// </param>
-        public String Item (int row, int col)
+        public String Item(int row, int col)
         {
-            if (row < m_height && col < m_width) {
-                String code = m_LevelArray.Item (row, col);
-                return m_Dictionary[code];
+            if( row < m_height && col < m_width ) {
+                String code = m_LevelArray.Item( row, col );
+                return m_Dictionary[ code ];
             }
 
             return null;
@@ -312,9 +319,7 @@ namespace ClassesLibrary {
         /// Сообщение об ошибке парсинга
         /// </value>
         public String LastError {
-            get {
-                return m_lastError;
-            }
+            get { return m_lastError; }
         }
 
         /// <summary>
@@ -324,36 +329,36 @@ namespace ClassesLibrary {
         /// Имя файла
         /// </value>
         public String FileName {
-            get {
-                return m_fileName;
-            }
+            get { return m_fileName; }
         }
 
         private int m_width;
         private int m_height;
         private int m_nDictionaryKeySize;
-        private StringDictionary m_Dictionary; // Код - описание
-        private DoubleArray<String> m_LevelArray; // Двумерный массив кодов
+        private StringDictionary m_Dictionary;
+        // Код - описание
+        private DoubleArray<String> m_LevelArray;
+        // Двумерный массив кодов
         private String m_lastError;
         private String m_fileName;
 
         /// <summary>
         /// Очистка парсера уровня
         /// </summary>
-        private void Clear ()
+        private void Clear()
         {
             m_width = 0;
             m_height = 0;
-            if (null != m_Dictionary) {
-                m_Dictionary.Clear ();
+            if( null != m_Dictionary ) {
+                m_Dictionary.Clear();
             }
-            if (null != m_LevelArray) {
-                m_LevelArray.Clear ();
+            if( null != m_LevelArray ) {
+                m_LevelArray.Clear();
             }
             m_nDictionaryKeySize = 1;
         }
-
-
-    }// class GameLevelParser
-}// namespace ClassesLibrary
+    }
+    // class GameLevelParser
+}
+// namespace ClassesLibrary
 

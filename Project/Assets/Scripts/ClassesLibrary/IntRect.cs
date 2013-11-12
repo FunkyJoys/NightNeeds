@@ -23,11 +23,11 @@ namespace ClassesLibrary {
         {
             return 
                 m_TopLeft.X <= point.X && point.X <= m_TopLeft.X + m_Size.Width &&
-                m_TopLeft.Y <= point.Y && point.Y <= m_TopLeft.Y + m_Size.Height;
+            m_TopLeft.Y <= point.Y && point.Y <= m_TopLeft.Y + m_Size.Height;
         }
 
         private Point<int> m_TopLeft;
-        private Size<int>  m_Size;
+        private Size<int> m_Size;
     }
 }
 

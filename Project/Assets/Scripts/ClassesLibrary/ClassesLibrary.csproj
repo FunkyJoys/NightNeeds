@@ -35,6 +35,23 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="GameLevelParser.cs" />
     <Compile Include="DoubleArray.cs" />
+    <Compile Include="AbstractLevelObject.cs" />
+    <Compile Include="Orientation.cs" />
+    <Compile Include="AbstractObjectEffect.cs" />
+    <Compile Include="RegistrableFactory.cs" />
+    <Compile Include="SelfRegistrable.cs" />
+    <Compile Include="GameLogic.cs" />
+    <Compile Include="Gamer\IMovement.cs" />
+    <Compile Include="Gamer\IState.cs" />
+    <Compile Include="Gamer\IVision.cs" />
+    <Compile Include="Gamer\IBackLight.cs" />
+    <Compile Include="GamerObject.cs" />
+    <Compile Include="Point.cs" />
+    <Compile Include="Size.cs" />
+    <Compile Include="IntRect.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Gamer\" />
+  </ItemGroup>
 </Project>

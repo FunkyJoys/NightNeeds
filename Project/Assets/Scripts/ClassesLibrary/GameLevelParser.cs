@@ -113,13 +113,20 @@ namespace ClassesLibrary
 						m_lastError = String.Format( "Line {0} must containt 4 parameters divided with single space", nCurrLine );
 						if( parameters.Length != 4 ) break;
 
-						m_width = Convert.ToInt32( parameters[0] );
-						m_height = Convert.ToInt32( parameters[1] );
+						int nDictionarySize = 0;
+						try {
+							m_width = Convert.ToInt32( parameters[0] );
+							m_height = Convert.ToInt32( parameters[1] );
 
-						m_LevelArray.SetSize( m_width, m_height );
+							m_LevelArray.SetSize( m_width, m_height );
 
-						int nDictionarySize = Convert.ToInt32( parameters[2] );
-						m_nDictionaryKeySize = Convert.ToInt32( parameters[3] );
+							nDictionarySize = Convert.ToInt32( parameters[2] );
+							m_nDictionaryKeySize = Convert.ToInt32( parameters[3] );
+
+						}catch (ApplicationException ex) {
+							m_lastError = String.Format( "Error try convert number: {0}", ex.Message );
+							break;
+						}
 
 						// 6. Проверяем, что **высота** равна количеству оставшихся строк.
 						// Будет сделано в конце.

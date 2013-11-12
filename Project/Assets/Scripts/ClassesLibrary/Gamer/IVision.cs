@@ -1,13 +1,12 @@
 using System;
 
-namespace ClassesLibrary
-{
-	namespace Gamer {
+namespace ClassesLibrary {
+    namespace Gamer {
 
-		/// Интерфейс "Зрение игрока".
-		public interface IVision
-		{
-		}
+        /// Интерфейс "Зрение игрока".
+        public interface IVision
+        {
+        }
 
-	}
+    }
 }
